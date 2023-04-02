@@ -75,40 +75,49 @@ let total = 0;
 function buy(id) {
     for (let i = 0; i < products.length; i++) {
         const product = products[i];
-      
-        if (product.id===id) {
+         if (product.id===id) {
             cartList.push(product)
             console.log(cartList)
             calculateTotal(cartList)
             return 
             }
-        
-
     }
-   
+   document.getElementById(`count_product`).innerHTML= cartList.length
 }
-
 // Exercise 2
 function cleanCart() {
-    cartList=[]
+    cartList = []
+    cart = []
+    total = 0
+    console.log(cartList)
     console.log(cartList)
 }
-
 // Exercise 3
 function calculateTotal(cartList) {
-    // Calculate total price of the cart using the "cartList" array
         const product = cartList[cartList.length-1]
-        total=total+product.price
-    console.log(total)
-
-}
+        total = total + product.price
+    console.log(total)}
 
 // Exercise 4
-function generateCart() {
-    // Using the "cartlist" array that contains all the items in the shopping cart, 
-    // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
-}
 
+   function generateCart() {
+    cartListLoop:
+    for (let i = 0; i < cartList.length; i++) {
+        const product = cartList[i]
+
+        for (let j = 0; j < cart.length; j++) {
+            if (product.id === cart[j].id) {
+                product.quantity = product.quantity +1
+                product.subtotal = product.price * product.quantity
+                continue cartListLoop
+            }
+        }
+        product.quantity = 1
+        cart.push(product)
+        console.log(cart)
+    }
+}
+ 
 // Exercise 5
 function applyPromotionsCart() {
     // Apply promotions to each item in the array "cart"
