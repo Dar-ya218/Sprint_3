@@ -7,7 +7,7 @@ let products = [
         type: 'grocery',
         offer: {
             number: 3,
-            percent: 20
+            percent: 10/10.5
         }
     },
     {
@@ -23,7 +23,7 @@ let products = [
         type: 'grocery',
         offer: {
             number: 10,
-            percent: 30
+            percent: 1-(1/3) //0.66666666667
         }
     },
     {
@@ -73,7 +73,15 @@ let total = 0;
 
 // Exercise 1
 function buy(id) {
-    for (let i = 0; i < products.length; i++) {
+    
+    console.log('id ', id);
+    const foundObject = products.find(obj => obj.id === id);
+    cartList.push(foundObject)
+    document.getElementById(`count_product`).innerHTML= cartList.length;
+
+    console.log(cartList);
+
+   /*  for (let i = 0; i < products.length; i++) {
         const product = products[i];
          if (product.id===id) {
             cartList.push(product)
@@ -81,62 +89,96 @@ function buy(id) {
             calculateTotal(cartList)
             return 
             }
-    }
-   document.getElementById(`count_product`).innerHTML= cartList.length
+            document.getElementById(`count_product`).innerHTML= cartList.length
+    } */
 }
 // Exercise 2
 function cleanCart() {
     cartList = []
     cart = []
     total = 0
+    document.getElementById(`count_product`).innerHTML= cartList.length;
     console.log(cartList)
     console.log(cartList)
+
 }
 // Exercise 3
-function calculateTotal(cartList) {
-        const product = cartList[cartList.length-1]
-        total = total + product.price
-    console.log(total)}
+function calculateTotal() {
+    for (let i = 0; i < cartList.length; i++) {
+        const element = cartList[i];
+       total+= element.price;
+    }
+    console.log(total, 'total without discount')
+    //document.getElementById('total_price').innerHTML=total;
+}
 
 // Exercise 4
 
    function generateCart() {
-    cartListLoop:
     for (let i = 0; i < cartList.length; i++) {
-        const product = cartList[i]
+        const product = cartList[i];
 
-        for (let j = 0; j < cart.length; j++) {
-            if (product.id === cart[j].id) {
-                product.quantity = product.quantity +1
-                product.subtotal = product.price * product.quantity
-                continue cartListLoop
-            }
+        const productIndex = cart.findIndex((productInCart) => productInCart.id === product.id);
+
+        if(productIndex === -1){
+            product.quantity = 1;
+            cart.push(product);
+        } else {
+            cart[productIndex].quantity += 1; // cart[productIndex].quantity = cart[productIndex].quantity + 1;
         }
-        product.quantity = 1
-        cart.push(product)
-        console.log(cart)
+        
     }
+    console.log('cart ',cart);
+    //applyPromotionsCart(cart);
 }
  
 // Exercise 5
-function applyPromotionsCart() {
-    // Apply promotions to each item in the array "cart"
-}
+    function applyPromotionsCart() {
+        total = 0;
+        for (let i = 0; i < cart.length; i++) {
+            let product = cart[i];
+            if (cart[i].hasOwnProperty("offer") && cart[i].quantity >= cart[i].offer.number){
+                cart[i].subtotalWithDiscount = product.quantity * product.price * product.offer.percent;
+            } else
+            cart[i].subtotalWithDiscount = product.quantity * product.price;
+            total += cart[i].subtotalWithDiscount;
+        }
+        document.getElementById('total_price').innerHTML=total;
+        console.log(cart);
+      }
+
 
 // Exercise 6
 function printCart() {
+    calculateTotal();
+    generateCart();
+    applyPromotionsCart();
+    
+    let cartListHtml = [];
+    for (let i = 0; i < cart.length; i++) {
+        const product = cart[i];
+        cartListHtml.push(`<tr>
+                <th scope="row">${product.name}</th>
+                <td>$${product.price}</td>
+                <td>${product.quantity}</td>
+                <td>$${product.subtotalWithDiscount}</td>
+                <td><a type="button" onclick="removeFromCart(${product.id})">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                    </a></td>
+                </tr>`);
+    };
+    document.getElementById("cart_list").innerHTML = cartListHtml.join("<br>");
+
+   /*  cart.length === 0 ? 
+        document.getElementById("total_price").innerHTML = 0 : 
+        document.getElementById("total_price").innerHTML = `${totalPrice}`; */
     // Fill the shopping cart modal manipulating the shopping cart dom
 }
 
+// Exercise 7
+
 
 // ** Nivell II **
-
-// Exercise 7
-function addToCart(id) {
-    // Refactor previous code in order to simplify it 
-    // 1. Loop for to the array products to get the item to add to cart
-    // 2. Add found product to the cart array or update its quantity in case it has been added previously.
-}
 
 // Exercise 8
 function removeFromCart(id) {
