@@ -109,7 +109,7 @@ function calculateTotal() {
        total+= element.price;
     }
     console.log(total, 'total without discount')
-    //document.getElementById('total_price').innerHTML=total;
+    //document.getElementById('total_price').innerHTML=total.toFixed(2);
 }
 
 // Exercise 4
@@ -124,7 +124,7 @@ function calculateTotal() {
             product.quantity = 1;
             cart.push(product);
         } else {
-            cart[productIndex].quantity += 1; // cart[productIndex].quantity = cart[productIndex].quantity + 1;
+            cart[productIndex].quantity += 1; 
         }
         
     }
@@ -143,7 +143,7 @@ function calculateTotal() {
             cart[i].subtotalWithDiscount = product.quantity * product.price;
             total += cart[i].subtotalWithDiscount;
         }
-        document.getElementById('total_price').innerHTML=total;
+        document.getElementById('total_price').innerHTML=total.toFixed(2);
         console.log(cart);
       }
 
@@ -168,15 +168,26 @@ function printCart() {
                 </tr>`);
     };
     document.getElementById("cart_list").innerHTML = cartListHtml.join("<br>");
-
-   /*  cart.length === 0 ? 
-        document.getElementById("total_price").innerHTML = 0 : 
-        document.getElementById("total_price").innerHTML = `${totalPrice}`; */
-    // Fill the shopping cart modal manipulating the shopping cart dom
 }
+// Fill the shopping cart modal manipulating the shopping cart dom
+
 
 // Exercise 7
-
+function addToCart(id) { //Para refactorisar y hacer funcionar ejercicio_7, tendria que cambiar en html nombre de funtion desde buy(id) al addToCart(id)
+    
+    const productIndex = cart.findIndex((productInCart) => productInCart.id === id);
+    
+    if(productIndex === -1){
+        const foundObject = products.find(obj => obj.id === id);
+        foundObject.quantity = 1;
+        cart.push(foundObject);
+    } else {
+        cart[productIndex].quantity += 1; 
+    }
+    // Refactor previous code in order to simplify it 
+    // 1. Loop for to the array products to get the item to add to cart
+    // 2. Add found product to the cart array or update its quantity in case it has been added previously.
+}
 
 // ** Nivell II **
 
