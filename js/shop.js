@@ -193,6 +193,25 @@ function addToCart(id) { //Para refactorisar y hacer funcionar ejercicio_7, tend
 
 // Exercise 8
 function removeFromCart(id) {
+    for ( let i = 0; i < cart.length; i++ ) {
+        
+        if ( cart[i].id === id ) {
+            
+            if (cart[i].quantity > 1) {
+                cart[i].quantity--;
+            }
+
+            else {
+                cart.splice(i, 1);
+                i--;
+            }
+        } 
+    }
+
+    printCart();
+
+    cart.length === 0 ? 
+        document.getElementById("count_product").innerHTML = 0 : false;
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cartList array
 }
