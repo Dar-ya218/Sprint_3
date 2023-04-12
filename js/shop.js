@@ -145,7 +145,6 @@ function calculateTotal() {
         console.log(cart);
       }
 
-
 // Exercise 6
 function printCart() {
     calculateTotal();
