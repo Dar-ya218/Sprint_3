@@ -97,10 +97,8 @@ function cleanCart() {
     cartList = []
     cart = []
     total = 0
-    document.getElementById(`count_product`).innerHTML= cartList.length;
-    console.log(cartList)
-    console.log(cartList)
-
+    document.getElementById('count_product').innerHTML= cartList.length;
+    console.log(cartList);
 }
 // Exercise 3
 function calculateTotal() {
@@ -194,7 +192,7 @@ function addToCart(id) { //Para refactorisar y hacer funcionar ejercicio_7, tend
 // Exercise 8
 function removeFromCart(id) {
     for ( let i = 0; i < cart.length; i++ ) {
-        
+
         if ( cart[i].id === id ) {
             
             if (cart[i].quantity > 1) {
