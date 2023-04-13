@@ -78,7 +78,7 @@ function buy(id) {
     const foundObject = products.find(obj => obj.id === id);
     cartList.push(foundObject)
     document.getElementById(`count_product`).innerHTML= cartList.length;
-
+    addToCart(id); //Es el ejercicio 7 para realiar
     console.log(cartList);
 
    /*  for (let i = 0; i < products.length; i++) {
@@ -98,10 +98,13 @@ function cleanCart() {
     cart = []
     total = 0
     document.getElementById('count_product').innerHTML= cartList.length;
+    document.getElementById('cart_list').innerHTML= 'No products';
+    document.getElementById('total_price').innerHTML= '0';
     console.log(cartList);
 }
 // Exercise 3
 function calculateTotal() {
+    total = 0;
     for (let i = 0; i < cartList.length; i++) {
         const element = cartList[i];
        total+= element.price;
@@ -113,6 +116,7 @@ function calculateTotal() {
 // Exercise 4
 
    function generateCart() {
+    cart = [];
     for (let i = 0; i < cartList.length; i++) {
         const product = cartList[i];
 
@@ -127,7 +131,6 @@ function calculateTotal() {
         
     }
     console.log('cart ',cart);
-    //applyPromotionsCart(cart);
 }
  
 // Exercise 5
@@ -147,8 +150,8 @@ function calculateTotal() {
 
 // Exercise 6
 function printCart() {
-    calculateTotal();
-    generateCart();
+
+   
     applyPromotionsCart();
     
     let cartListHtml = [];
@@ -200,20 +203,20 @@ function removeFromCart(id) {
 
             else {
                 cart.splice(i, 1);
-                i--;
             }
         } 
     }
 
     printCart();
 
-    cart.length === 0 ? 
-        document.getElementById("count_product").innerHTML = 0 : false;
+    document.getElementById("count_product").innerHTML = cart.length;
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cartList array
 }
 
 function open_modal(){
 	console.log("Open Modal");
+    calculateTotal();
+    //generateCart();
 	printCart();
 }
